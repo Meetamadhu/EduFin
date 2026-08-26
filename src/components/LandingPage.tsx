@@ -40,7 +40,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   return (
     <div className="space-y-16 pb-12 animate-in fade-in duration-300">
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden rounded-3xl bg-sky-950 text-white p-6 sm:p-10 lg:p-14 min-h-[540px] border border-sky-300 shadow-xl">
+      <section className="relative overflow-hidden rounded-3xl bg-sky-950 text-white p-6 sm:p-10 lg:p-14 min-h-135 border border-sky-300 shadow-xl">
         <img
           src="/hero-campus.jpg"
           alt=""
@@ -48,7 +48,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           className="absolute inset-0 h-full w-full object-cover object-[72%_center] pointer-events-none"
         />
         <div
-          className="absolute inset-0 pointer-events-none backdrop-blur-[8px]"
+          className="absolute inset-0 pointer-events-none backdrop-blur-sm"
           style={{
             WebkitMaskImage: 'linear-gradient(108deg, black 0%, black 36%, transparent 58%)',
             maskImage: 'linear-gradient(108deg, black 0%, black 36%, transparent 58%)',
@@ -720,7 +720,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* FINAL CALL TO ACTION / ENTRY SELECTOR */}
-      <section className="bg-violet-200 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl border border-violet-300">
+      <section className="bg-white rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl border border-slate-200">
         <div className="max-w-3xl mx-auto space-y-3">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900">
             {isEs ? '¿Listo para experimentar el ecosistema?' : 'Ready to Experience the Ecosystem?'}
