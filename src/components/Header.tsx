@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MainView, PersonaType, Language } from '../types';
 import { mockTranslations } from '../data/mockData';
 import { 
@@ -7,251 +7,196 @@ import {
   Landmark, 
   ShieldCheck, 
   Sparkles, 
-  Layers, 
-  BarChart3, 
-  Network, 
-  BookOpen, 
   Globe2,
-  Compass
+  ChevronDown,
+  BookOpen,
+  Network,
+  Compass,
+  Layers,
+  BarChart3
 } from 'lucide-react';
 
 interface HeaderProps {
   currentView: MainView;
-  setCurrentView: (view: MainView) => void;
   currentPersona: PersonaType;
-  setCurrentPersona: (persona: PersonaType) => void;
   language: Language;
   setLanguage: (lang: Language) => void;
   onOpenPrivacyInfo: () => void;
+  onNavigate: (view: MainView, persona?: PersonaType) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentView,
-  setCurrentView,
   currentPersona,
-  setCurrentPersona,
   language,
   setLanguage,
-  onOpenPrivacyInfo
+  onOpenPrivacyInfo,
+  onNavigate
 }) => {
+  const [portalOpen, setPortalOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const close = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setPortalOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, []);
+
+  const enterPortal = (persona: PersonaType) => {
+    setPortalOpen(false);
+    onNavigate('prototype', persona);
+  };
+
   const t = mockTranslations[language];
 
+  const navItems: { view: MainView; label: string; icon: React.ReactNode }[] = [
+    { view: 'landing', label: t.tabs.landing, icon: <Compass className="w-4 h-4" /> },
+    { view: 'prototype', label: t.tabs.prototype, icon: <Layers className="w-4 h-4" /> },
+    { view: 'strategic_deck', label: t.tabs.strategic, icon: <BookOpen className="w-4 h-4" /> },
+    { view: 'architecture', label: t.tabs.architecture, icon: <Network className="w-4 h-4" /> },
+    { view: 'simulator', label: t.tabs.simulator, icon: <BarChart3 className="w-4 h-4" /> },
+  ];
+
+  const portalLabel =
+    currentView === 'prototype'
+      ? currentPersona === 'university'
+        ? language === 'es' ? 'Universidad' : 'University'
+        : currentPersona === 'bank'
+          ? language === 'es' ? 'Banca' : 'Bank'
+          : language === 'es' ? 'Estudiante' : 'Student'
+      : language === 'es' ? 'Entrar al portal' : 'Enter portal';
+
   return (
-    <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40 shadow-md">
-      {/* Top Banner: Contest & Institutional Guarantee */}
-      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 px-4 py-1.5 border-b border-blue-800/40 text-xs flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-blue-200">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span className="font-semibold text-white">Ecosistema B2B2C Universidad–Banca:</span>
-          <span className="hidden sm:inline text-blue-200/90">
-            {language === 'es' 
-              ? 'El puente institucional de financiamiento, tesorería y grants sin revisar finanzas personales.'
-              : 'Institutional bridge for tuition financing, treasury & research grants with zero personal finance review.'}
+    <header className="bg-sky-200 text-slate-800 border-b border-sky-300 sticky top-0 z-40 shadow-sm">
+      <div className="bg-slate-900 px-4 py-1.5 border-b border-slate-800 text-xs flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2 text-slate-300">
+          <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-semibold text-white">
+            {language === 'es'
+              ? 'Universidad, banca y estudiantes en un mismo flujo.'
+              : 'Universities, banks, and students in one flow.'}
           </span>
         </div>
-        
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={onOpenPrivacyInfo}
-            className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-colors cursor-pointer text-[11px] font-medium"
-            title="Conoce cómo funciona la privacidad por diseño"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>{language === 'es' ? 'Privacidad ZKP: Cero datos personales' : 'ZKP Privacy: Zero personal finance data'}</span>
-          </button>
 
-          <button
-            onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
-            className="flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700 cursor-pointer"
-          >
-            <Globe2 className="w-3 h-3 text-blue-400" />
-            <span>{language.toUpperCase()}</span>
-          </button>
-        </div>
+        <button
+          onClick={onOpenPrivacyInfo}
+          className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-colors cursor-pointer text-[11px] font-medium"
+        >
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <span>{language === 'es' ? 'Tu historial personal no se comparte' : 'Personal finances stay private'}</span>
+        </button>
       </div>
 
-      {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
-          {/* Logo and Brand */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setCurrentView('landing')}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-bold">
+          <button
+            type="button"
+            className="flex items-center gap-3 cursor-pointer text-left"
+            onClick={() => onNavigate('landing')}
+          >
+            <div className="w-10 h-10 rounded-xl bg-sky-500 flex items-center justify-center shadow-md shadow-sky-400/40 text-white font-bold">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-blue-200 bg-clip-text text-transparent">
-                  NEXUS <span className="text-blue-400">EduFin</span>
-                </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                  B2B2C Mesh
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 font-medium hidden md:block">
-                {language === 'es' ? 'Plataforma Universidad–Banca–Estudiante' : 'University–Banking–Student Ecosystem'}
+              <span className="font-extrabold text-lg tracking-tight text-slate-800">
+                NEXUS <span className="text-sky-700">EduFin</span>
+              </span>
+              <p className="text-sm text-slate-600 font-medium hidden xl:block">
+                {language === 'es' ? 'Financiamiento educativo sin buró crediticio' : 'Tuition financing without a credit check'}
               </p>
             </div>
-          </div>
+          </button>
 
-          {/* Primary View Navigation Tabs */}
-          <nav className="hidden lg:flex items-center gap-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700/60">
-            <button
-              onClick={() => setCurrentView('landing')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                currentView === 'landing'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
-              }`}
-            >
-              <Compass className="w-4 h-4" />
-              {t.tabs.landing}
-            </button>
-            <button
-              onClick={() => setCurrentView('prototype')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                currentView === 'prototype'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
-              }`}
-            >
-              <Layers className="w-4 h-4" />
-              {t.tabs.prototype}
-            </button>
-            <button
-              onClick={() => setCurrentView('strategic_deck')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                currentView === 'strategic_deck'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
-              }`}
-            >
-              <BookOpen className="w-4 h-4" />
-              {t.tabs.strategic}
-            </button>
-            <button
-              onClick={() => setCurrentView('architecture')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                currentView === 'architecture'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
-              }`}
-            >
-              <Network className="w-4 h-4" />
-              {t.tabs.architecture}
-            </button>
-            <button
-              onClick={() => setCurrentView('simulator')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                currentView === 'simulator'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
-              }`}
-            >
-              <BarChart3 className="w-4 h-4" />
-              {t.tabs.simulator}
-            </button>
+          <nav className="hidden lg:flex items-center gap-1 bg-white/70 p-1 rounded-xl border border-sky-300">
+            {navItems.map((item) => (
+              <button
+                key={item.view}
+                type="button"
+                onClick={() => onNavigate(item.view)}
+                className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  currentView === item.view
+                    ? 'bg-sky-500 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            ))}
           </nav>
 
-          {/* Persona Switcher Buttons (Direct shortcuts to Prototype with that persona) */}
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400 font-medium hidden xl:inline">
-              {language === 'es' ? 'Acceso directo:' : 'Direct entry:'}
-            </span>
-            <div className="flex bg-slate-800 p-1 rounded-xl border border-slate-700">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
+              className="flex items-center gap-1 text-sm font-medium px-2.5 py-1.5 rounded-lg bg-white/80 hover:bg-white text-slate-700 transition-colors border border-sky-300 cursor-pointer"
+            >
+              <Globe2 className="w-4 h-4 text-sky-600" />
+              <span>{language.toUpperCase()}</span>
+            </button>
+
+            <div className="relative" ref={menuRef}>
               <button
-                onClick={() => {
-                  setCurrentPersona('student');
-                  setCurrentView('prototype');
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  currentPersona === 'student' && currentView === 'prototype'
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-                title="Ir al Portal Estudiante Universitario"
+                type="button"
+                onClick={() => setPortalOpen((open) => !open)}
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold shadow-sm cursor-pointer"
               >
-                <GraduationCap className="w-3.5 h-3.5 text-indigo-300" />
-                <span className="hidden sm:inline">{language === 'es' ? 'Estudiante' : 'Student'}</span>
+                <span>{portalLabel}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${portalOpen ? 'rotate-180' : ''}`} />
               </button>
-              <button
-                onClick={() => {
-                  setCurrentPersona('university');
-                  setCurrentView('prototype');
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  currentPersona === 'university' && currentView === 'prototype'
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-                title="Ir al Portal Directivos y Tesorería Universitaria"
-              >
-                <Building2 className="w-3.5 h-3.5 text-blue-300" />
-                <span className="hidden sm:inline">{language === 'es' ? 'Universidad' : 'University'}</span>
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentPersona('bank');
-                  setCurrentView('prototype');
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  currentPersona === 'bank' && currentView === 'prototype'
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-                title="Ir al Portal Entidad Bancaria / FinTech Partner"
-              >
-                <Landmark className="w-3.5 h-3.5 text-emerald-300" />
-                <span className="hidden sm:inline">{language === 'es' ? 'Banca' : 'Bank'}</span>
-              </button>
+
+              {portalOpen && (
+                <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-sky-200 bg-white shadow-xl p-1.5 z-50">
+                  <button
+                    type="button"
+                    onClick={() => enterPortal('student')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-indigo-50 cursor-pointer"
+                  >
+                    <GraduationCap className="w-4 h-4 text-indigo-600" />
+                    {language === 'es' ? 'Portal Estudiante' : 'Student portal'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => enterPortal('university')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-sky-50 cursor-pointer"
+                  >
+                    <Building2 className="w-4 h-4 text-sky-600" />
+                    {language === 'es' ? 'Portal Universidad' : 'University portal'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => enterPortal('bank')}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-emerald-50 cursor-pointer"
+                  >
+                    <Landmark className="w-4 h-4 text-emerald-600" />
+                    {language === 'es' ? 'Portal Banco' : 'Bank portal'}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Mobile Sub-Navigation for Small Screens */}
-        <div className="lg:hidden flex items-center justify-between py-2.5 border-t border-slate-800 gap-1 overflow-x-auto text-xs">
-          <button
-            onClick={() => setCurrentView('landing')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium cursor-pointer ${
-              currentView === 'landing' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {t.tabs.landing}
-          </button>
-          <button
-            onClick={() => setCurrentView('prototype')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium cursor-pointer ${
-              currentView === 'prototype' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {t.tabs.prototype}
-          </button>
-          <button
-            onClick={() => setCurrentView('strategic_deck')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium cursor-pointer ${
-              currentView === 'strategic_deck' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {t.tabs.strategic}
-          </button>
-          <button
-            onClick={() => setCurrentView('architecture')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium cursor-pointer ${
-              currentView === 'architecture' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {t.tabs.architecture}
-          </button>
-          <button
-            onClick={() => setCurrentView('simulator')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium cursor-pointer ${
-              currentView === 'simulator' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {t.tabs.simulator}
-          </button>
+        <div className="lg:hidden flex items-center gap-1 overflow-x-auto pb-3">
+          {navItems.map((item) => (
+            <button
+              key={item.view}
+              type="button"
+              onClick={() => onNavigate(item.view)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap cursor-pointer ${
+                currentView === item.view
+                  ? 'bg-sky-500 text-white'
+                  : 'bg-white/80 text-slate-600 border border-sky-300'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       </div>
     </header>
   );
 };
-

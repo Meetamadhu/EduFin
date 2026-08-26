@@ -39,27 +39,27 @@ export const BankPortal: React.FC<BankPortalProps> = ({
   return (
     <div className="space-y-8">
       {/* Bank Partner Header Banner */}
-      <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 rounded-2xl p-6 sm:p-8 text-white border border-emerald-800/40 shadow-xl relative overflow-hidden">
+      <div className="bg-linear-to-br from-emerald-50 via-sky-50 to-white rounded-2xl p-6 sm:p-8 text-slate-800 border border-emerald-200 shadow-sm relative overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1.5">
-                <Landmark className="w-4 h-4 text-emerald-400" />
-                {language === 'es' ? 'Portal Corporativo de Banca & FinTech' : 'Corporate Banking & FinTech Hub'}
+              <span className="px-3 py-1 rounded-full bg-white text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center gap-1.5">
+                <Landmark className="w-4 h-4 text-emerald-600" />
+                {language === 'es' ? 'Portal bancario' : 'Bank portal'}
               </span>
-              <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-                {language === 'es' ? 'Underwriting Académico Institucional' : 'Institutional Academic Underwriting'}
+              <span className="px-3 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-xs font-semibold flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
+                {language === 'es' ? 'Aval académico, no buró' : 'Academic backing, not a bureau'}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               {language === 'es' ? 'Consorcio Bancario Alianza Futuro' : 'Alianza Futuro Banking Consortium'}
             </h1>
-            <p className="text-slate-300 text-sm max-w-2xl leading-relaxed">
+            <p className="text-slate-600 text-base max-w-2xl leading-relaxed">
               {language === 'es'
-                ? 'Colocación de financiamiento educativo mediante aval universitario institucional, originación masiva de clientes jóvenes sin fricción de CAC y fondos ESG.'
-                : 'Educational credit origination backed by university institutional escrow, mass youth acquisition with near-zero CAC, and ESG-qualified funding.'}
+                ? 'Coloca crédito educativo con aval universitario y capta clientes jóvenes sin costo de adquisición.'
+                : 'Originate education credit with university backing and win young customers at near-zero acquisition cost.'}
             </p>
           </div>
 
@@ -73,7 +73,7 @@ export const BankPortal: React.FC<BankPortalProps> = ({
             </button>
             <button
               onClick={onAllocateGrant}
-              className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 bg-white hover:bg-emerald-50 text-slate-700 border border-emerald-200 text-sm font-semibold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span>{language === 'es' ? 'Crear Nuevo Fondo Grant' : 'Allocate Innovation Grant'}</span>

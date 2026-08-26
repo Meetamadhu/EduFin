@@ -51,27 +51,27 @@ export const UniversityPortal: React.FC<UniversityPortalProps> = ({
   return (
     <div className="space-y-8">
       {/* University Header Banner */}
-      <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 rounded-2xl p-6 sm:p-8 text-white border border-blue-800/40 shadow-xl relative overflow-hidden">
+      <div className="bg-linear-to-br from-sky-100 via-blue-50 to-white rounded-2xl p-6 sm:p-8 text-slate-800 border border-sky-200 shadow-sm relative overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center gap-1.5">
-                <Building2 className="w-4 h-4 text-blue-400" />
-                {language === 'es' ? 'Portal de Tesorería & Vicerrectoría' : 'Treasury & Academic Governance'}
+              <span className="px-3 py-1 rounded-full bg-white text-sky-700 border border-sky-200 text-xs font-semibold flex items-center gap-1.5">
+                <Building2 className="w-4 h-4 text-sky-600" />
+                {language === 'es' ? 'Tesorería universitaria' : 'University treasury'}
               </span>
-              <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1.5">
-                <Database className="w-3.5 h-3.5 text-emerald-400" />
-                SIS Node: {metrics.sisSyncStatus}
+              <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center gap-1.5">
+                <Database className="w-3.5 h-3.5 text-emerald-600" />
+                {metrics.sisSyncStatus}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               {language === 'es' ? 'Universidad Metropolitana de Innovación (UMI)' : 'Metropolitan University of Innovation (UMI)'}
             </h1>
-            <p className="text-slate-300 text-sm max-w-2xl leading-relaxed">
+            <p className="text-slate-600 text-base max-w-2xl leading-relaxed">
               {language === 'es'
-                ? 'Monitoreo de flujo de matrícula en tiempo real, conciliación automatizada con la red bancaria y co-financiamiento de semilleros de investigación.'
-                : 'Real-time tuition cashflow tracking, automated settlement with banking network, and co-financed research lab funds.'}
+                ? 'Ve el dinero de matrícula el mismo día, concilia con los bancos y cofinancia investigación.'
+                : 'See tuition land the same day, reconcile with banks, and co-fund research.'}
             </p>
           </div>
 
@@ -87,16 +87,16 @@ export const UniversityPortal: React.FC<UniversityPortalProps> = ({
             </button>
             <button
               onClick={() => onApproveAgreement('Banco Santander & BBVA Horizon')}
-              className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 bg-white hover:bg-sky-50 text-slate-700 border border-sky-200 text-sm font-semibold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
             >
-              <FileText className="w-4 h-4 text-indigo-400" />
+              <FileText className="w-4 h-4 text-sky-600" />
               <span>{language === 'es' ? 'Ver Convenios Marco' : 'Framework Agreements'}</span>
             </button>
           </div>
         </div>
 
         {reconcileSuccess && (
-          <div className="mt-4 p-3 bg-emerald-900/60 border border-emerald-500/50 rounded-xl text-xs text-emerald-200 flex items-center gap-2 animate-fadeIn">
+          <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-800 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>{language === 'es' ? 'Conciliación completada: 100% de los desembolsos de la banca fueron acreditados a la tesorería.' : 'Reconciliation complete: 100% of banking disbursements credited to university treasury.'}</span>
           </div>

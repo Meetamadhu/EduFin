@@ -56,26 +56,23 @@ export const RoiSimulator: React.FC<RoiSimulatorProps> = ({ language }) => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 sm:p-8 text-white border border-slate-800 shadow-xl space-y-4">
+      <div className="bg-linear-to-br from-sky-100 via-emerald-50 to-white rounded-2xl p-6 sm:p-8 text-slate-800 border border-sky-200 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5">
-            <Sliders className="w-4 h-4 text-indigo-400" />
-            {language === 'es' ? 'Simulador Dinámico de Impacto & ROI' : 'Interactive Impact & ROI Simulator'}
-          </span>
-          <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">
-            {language === 'es' ? 'Modelado B2B2C en Tiempo Real' : 'Real-Time B2B2C Financial Modeling'}
+          <span className="px-3 py-1 rounded-full bg-white text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center gap-1.5">
+            <Sliders className="w-4 h-4 text-emerald-600" />
+            {language === 'es' ? 'Simulador de impacto' : 'Impact simulator'}
           </span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
           {language === 'es'
-            ? 'Calculadora de Viabilidad y Retorno de Inversión'
-            : 'Viability and Return on Investment Calculator'}
+            ? 'Cuánto ahorra cada actor'
+            : 'What each actor saves'}
         </h1>
-        <p className="text-slate-300 text-sm max-w-3xl leading-relaxed">
+        <p className="text-slate-600 text-base max-w-3xl leading-relaxed">
           {language === 'es'
-            ? 'Ajusta los parámetros universitarios y bancarios para proyectar los ahorros en deserción, el valor de vida del cliente (LTV) y el beneficio para los estudiantes.'
-            : 'Adjust university and banking parameters to project dropout revenue protection, customer lifetime value (LTV), and student interest savings.'}
+            ? 'Mueve los números del campus y mira el impacto en deserción, tesorería y banca.'
+            : 'Move campus numbers and see the impact on dropout, treasury, and banking.'}
         </p>
       </div>
 
@@ -295,27 +292,27 @@ export const RoiSimulator: React.FC<RoiSimulatorProps> = ({ language }) => {
           </div>
 
           {/* Card 3: Student Social & Financial Benefit */}
-          <div className="bg-gradient-to-r from-indigo-900 to-slate-900 text-white rounded-2xl p-5 space-y-3">
+          <div className="bg-indigo-50 text-slate-800 rounded-2xl p-5 space-y-3 border border-indigo-200">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
                 <GraduationCap className="w-4 h-4" />
                 {language === 'es' ? 'Beneficio Directo al Estudiante' : 'Direct Student Welfare'}
               </span>
-              <span className="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-500/40 font-bold">
+              <span className="text-xs bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full border border-emerald-200 font-bold">
                 {language === 'es' ? 'Cero Endeudamiento Predatorio' : 'Zero Predatory Debt'}
               </span>
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between items-baseline gap-2 pt-1">
               <div>
-                <span className="text-xs text-slate-300 block">
+                <span className="text-sm text-slate-600 block">
                   {language === 'es' ? 'Ahorro total en intereses de crédito usurero evitado:' : 'Total interest saved vs commercial loans:'}
                 </span>
-                <span className="text-2xl font-extrabold text-emerald-400">
+                <span className="text-2xl font-extrabold text-emerald-700">
                   ${(studentInterestSavings / 1000000).toFixed(2)}M USD
                 </span>
               </div>
-              <p className="text-xs text-slate-300 max-w-xs sm:text-right">
+              <p className="text-sm text-slate-600 max-w-xs sm:text-right">
                 {language === 'es'
                   ? 'Tasas 0% o subsidiadas por convenios marco institucionales.'
                   : '0% or institutionally subsidized tuition agreements.'}

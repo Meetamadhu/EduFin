@@ -43,38 +43,34 @@ export const StrategicFramework: React.FC<StrategicFrameworkProps> = ({ language
   return (
     <div className="space-y-8">
       {/* Strategic Deck Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 sm:p-8 text-white border border-slate-800 shadow-xl space-y-4">
+      <div className="bg-linear-to-br from-sky-100 via-violet-50 to-white rounded-2xl p-6 sm:p-8 text-slate-800 border border-sky-200 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center gap-1.5">
-            <Target className="w-4 h-4 text-blue-400" />
-            {language === 'es' ? 'Marco Estratégico & Pilares' : 'Strategic Pillars & Blueprint'}
-          </span>
-          <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">
-            {language === 'es' ? 'EdTech + FinTech Institucional' : 'EdTech + Institutional FinTech'}
+          <span className="px-3 py-1 rounded-full bg-white text-sky-700 border border-sky-200 text-xs font-semibold flex items-center gap-1.5">
+            <Target className="w-4 h-4 text-sky-600" />
+            {language === 'es' ? 'Marco estratégico' : 'Strategic pillars'}
           </span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
           {language === 'es'
-            ? 'Pilares EdTech, FinTech, Escalabilidad e Implementación'
-            : 'EdTech & FinTech Pillars, Scalability and Implementation'}
+            ? 'Cómo se arma y se escala el ecosistema'
+            : 'How the ecosystem is built and scaled'}
         </h1>
-        <p className="text-slate-300 text-sm max-w-3xl leading-relaxed">
+        <p className="text-slate-600 text-base max-w-3xl leading-relaxed">
           {language === 'es'
-            ? 'Un desglose exhaustivo de los pilares que hacen viable, escalable y transformador el ecosistema entre la educación superior y las entidades financieras.'
-            : 'A comprehensive strategic breakdown of the pillars that make the higher education and banking ecosystem viable, scalable, and impactful.'}
+            ? 'Los pilares de educación, banca, tecnología e implementación en un solo mapa.'
+            : 'Education, banking, technology, and rollout in one map.'}
         </p>
 
-        {/* Filter Navigation */}
         <div className="pt-2 flex flex-wrap gap-1.5">
           {['all', 'EdTech', 'FinTech', 'Tecnología', 'Escalabilidad', 'Viabilidad', 'Implementación'].map(cat => (
             <button
               key={cat}
               onClick={() => setSelectedVertical(cat)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
                 selectedVertical === cat
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'
+                  ? 'bg-sky-500 text-white shadow-sm'
+                  : 'bg-white text-slate-600 hover:bg-sky-50 border border-sky-200'
               }`}
             >
               {cat === 'all' ? (language === 'es' ? 'Ver Todos los Pilares' : 'All Pillars') : cat}
@@ -132,37 +128,37 @@ export const StrategicFramework: React.FC<StrategicFrameworkProps> = ({ language
             </div>
 
             {/* Institutional Value Creation (3 Perspectives) */}
-            <div className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-xl p-5 space-y-3">
-              <h4 className="text-xs font-bold text-indigo-300 uppercase tracking-wider">
+            <div className="bg-sky-50 text-slate-800 rounded-xl p-5 space-y-3 border border-sky-200">
+              <h4 className="text-xs font-bold text-sky-700 uppercase tracking-wider">
                 {language === 'es' ? 'Propuesta de Valor Tripartita (Win-Win-Win)' : 'Tripartite Value Creation'}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                 <div className="space-y-1 border-l-2 border-blue-400 pl-3">
-                  <span className="font-bold text-blue-300 flex items-center gap-1">
+                  <span className="font-bold text-sky-700 flex items-center gap-1">
                     <Building2 className="w-3.5 h-3.5" />
                     {language === 'es' ? 'Para Universidades' : 'For Universities'}
                   </span>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 text-sm leading-relaxed">
                     {pillar.institutionalValue.forUniversities}
                   </p>
                 </div>
 
                 <div className="space-y-1 border-l-2 border-emerald-400 pl-3">
-                  <span className="font-bold text-emerald-300 flex items-center gap-1">
+                  <span className="font-bold text-emerald-700 flex items-center gap-1">
                     <Landmark className="w-3.5 h-3.5" />
                     {language === 'es' ? 'Para Bancos' : 'For Banks'}
                   </span>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 text-sm leading-relaxed">
                     {pillar.institutionalValue.forBanks}
                   </p>
                 </div>
 
                 <div className="space-y-1 border-l-2 border-amber-400 pl-3">
-                  <span className="font-bold text-amber-300 flex items-center gap-1">
+                  <span className="font-bold text-amber-700 flex items-center gap-1">
                     <GraduationCap className="w-3.5 h-3.5" />
                     {language === 'es' ? 'Para Estudiantes' : 'For Students'}
                   </span>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 text-sm leading-relaxed">
                     {pillar.institutionalValue.forStudents}
                   </p>
                 </div>
