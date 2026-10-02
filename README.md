@@ -1,20 +1,27 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# NEXUS EduFin
 
-# Run and deploy your AI Studio app
+Interactive B2B2C prototype for education financing. It connects universities, banks, and students around tuition plans and institutional risk — without scoring a student’s personal credit history.
 
-This contains everything you need to run your app locally.
+Live: [edufin-ecru.vercel.app](https://edufin-ecru.vercel.app)
 
-View your app in AI Studio: https://ai.studio/apps/1bcd4bdc-f105-4377-9814-a107ccf480f3
+## What’s in the prototype
 
-## Run Locally
+- Landing page (Spanish / English)
+- Student, university, and bank portals
+- Strategic framework, ecosystem architecture, and ROI simulator
+- Client-side routes: `/estudiante`, `/universidad`, `/banco`, `/estrategia`, `/arquitectura`, `/simulador`
 
-**Prerequisites:**  Node.js
+## Stack
 
+React 19, TypeScript, Vite, Tailwind CSS
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+No backend and **no API keys**. The app does not call Gemini or any other AI service. Data in the portals is mock.
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Opens at `http://localhost:3000`.
